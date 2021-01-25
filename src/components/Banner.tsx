@@ -30,12 +30,14 @@ export const Banner = (props):JSX.Element => {
                 justify="center"
             >
             <Typography variant="h5" gutterBottom>
-                Communicate and help between  
-                <select onChange={handleSelectA} defaultValue={'en'}>
+                <span>Communicate and help between </span>
+                <select className="select" onChange={handleSelectA} defaultValue={'en'}>
                     {props.menuItems}
                 </select>
-                and   
-                <select onChange={handleSelectB} defaultValue={'fr'}>
+                <span>
+                <span> and </span>
+                </span>   
+                <select className="select" onChange={handleSelectB} defaultValue={'fr'}>
                     {props.menuItems}
                 </select>
             </Typography>

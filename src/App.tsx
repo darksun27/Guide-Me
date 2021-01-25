@@ -15,10 +15,10 @@ import {v4 as uuidv4} from 'uuid';
 var key_var = '032acdebcaba4b299a465fa6b52c1ee5';
 var region_var = 'eastus';
 
+let feedbacks = {};
 
 
 function App():JSX.Element {
-
   let [A, setA] = useState('en');
   let [B, setB] = useState('fr');
   let [AtoBList, setAtoBList] = useState([])
@@ -34,7 +34,15 @@ function App():JSX.Element {
     setAtoBList([]);
   }
 
+  const storeFeedback = (text, translation, feedback) => {
+    let f = {};
+    f['tr'] = translation;
+    f['fd'] = feedback;
+    feedbacks[text] = f;
+  }
+
   const translate = async (from, to, text) => {
+
     //api code
     let translation = text;
     let options = {
@@ -68,21 +76,28 @@ function App():JSX.Element {
     translation = trn;
   })
 
+  let f = {};
+  f['tr'] = translation;
+  f['fd'] = "none";
+  feedbacks[text] = f;
+  
     if(A === B) {
       alert('Both Languages are same please choose different languages');
     }
     else if(from === A) {
-      setBtoAList([...BtoAList, <MessageBox
+      setBtoAList([...BtoAList, <><MessageBox
         avatar={translateLogo}
         position={'left'}
         text={translation}
-        />]);
+        /><div style={{paddingLeft:"20px"}}><button className="report positive" onClick={()=>storeFeedback(text, translation, "like")}><i className="fas fa-check"></i></button>
+        <button className="report negative" onClick={()=>storeFeedback(text, translation, "dislike")}><i className="fas fa-times"></i></button></div></>]);
     } else {
-      setAtoBList([...AtoBList, <MessageBox
+      setAtoBList([...AtoBList, <><MessageBox
         avatar={translateLogo}
         position={'left'}
         text={translation}
-        />]);
+        /><div style={{paddingLeft:"20px"}}><button className="report positive" onClick={()=>storeFeedback(text, translation, "like")}><i className="fas fa-check"></i></button>
+        <button className="report negative" onClick={()=>storeFeedback(text, translation, "dislike")}><i className="fas fa-times"></i></button></div></>]);
     }
   }
 
@@ -101,7 +116,7 @@ function App():JSX.Element {
         <TextArea addToList={setBtoAList} list={BtoAList} from={B} to={A} translate={translate}/>
       </div>
       <div style={{display:"flex", justifyContent:"center", marginTop:"30px"}}>
-        <EndInteraction />
+        <EndInteraction feedback={feedbacks}/>
       </div>
     </div>
   );

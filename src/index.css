@@ -31,3 +31,25 @@
     align-self: flex-start;
     width: 30%;
 }
+
+.report {
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.select {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.positive {
+  background-color: #36d7b7;
+  border-color: #36d7b7;
+}
+
+.negative {
+  background-color: #f1828d;
+  border-color: #f1828d;
+}
